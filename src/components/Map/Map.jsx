@@ -5,16 +5,18 @@ import { useSelector } from "react-redux";
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 
 function Map() {
-  const locations = useSelector( state => state.locations)
-  console.log('locations: ',locations)
-  const centerArray = locations&&locations.map((location) => [
-    location[0],
-    location[1],
-    location[2],
-  ]);
+  const locations = useSelector((state) => state.shelter.locations);
+  const center = useSelector((state) => state.shelter.center);
+  console.log(center);
 
-  const center = { lat: 37.54686, lng: 126.95838 };
+  const centerArray =
+    locations &&
+    locations.map((location) => [location[0], location[1], location[2]]);
+  console.log(centerArray);
 
+  const clickMarkerHandler = (spot) => {
+    console.log(spot);
+  };
   return (
     <LoadScriptNext googleMapsApiKey={MAP_API_KEY}>
       <GoogleMap
@@ -22,13 +24,15 @@ function Map() {
         center={center}
         mapContainerClassName="map-container"
       >
-        {centerArray&&centerArray.map((spot, index) => (
-          <MarkerF
-            key={index}
-            label={spot[0]}
-            position={{ lat: parseFloat(spot[1]), lng: parseFloat(spot[2]) }}
-          />
-        ))}
+        {centerArray &&
+          centerArray.map((spot, index) => (
+            <MarkerF
+              key={index}
+              label={spot[0]}
+              position={{ lat: parseFloat(spot[1]), lng: parseFloat(spot[2]) }}
+              onClick={clickMarkerHandler(spot[0])}
+            />
+          ))}
       </GoogleMap>
     </LoadScriptNext>
   );
