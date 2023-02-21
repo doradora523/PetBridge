@@ -1,10 +1,14 @@
 import React from "react";
 import { Card } from "antd";
+import { useSelector } from "react-redux";
 
-const List = ({ items }) => {
+const List = () => {
+  const items = useSelector( state => state.items)
+  
+  console.log('items: ',items)
   return (
     <ul className="listWrap">
-      {items.map((item, index) => (
+      {items&&items.map((item, index) => (
         <Card key={index} title={item.careNm} extra={<a href="#">More</a>}>
           <p>
             {item.saveTrgtAnimal ? (

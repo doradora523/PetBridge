@@ -1,8 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import List from "./components/List/List";
-import Map from "./components/Map/Map";
+import { Provider, useDispatch } from "react-redux";
+import store from "./redux/store/index";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./style.scss";
+
+import AnouncementPet from "./pages/AnouncementPet";
+import Header from "./pages/Header";
+import Main from "./pages/Main";
+import Shelter from "./pages/Shelter";
+import shelterSlice from "./redux/slice/shelter";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const REQUEST_URL = `${process.env.REACT_APP_REQUEST_URL}?serviceKey=${API_KEY}`;
@@ -13,9 +20,7 @@ const REQUEST_PARAMS = {
 };
 
 const App = () => {
-  const [locations, setLocations] = useState([]);
-  const [items, setItems] = useState([]);
-  console.log(items);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getData = () => {
@@ -25,8 +30,13 @@ const App = () => {
         })
         .then((res) => {
           const data = res.data.response.body.items;
-          setItems(data.item);
-          setLocations(data.item.map((spot) => [spot.careNm, spot.lat, spot.lng]));
+          dispatch(shelterSlice.actions.setItems(data.item));
+          dispatch(
+            shelterSlice.actions.setLocations(
+              data.item.map((spot) => [spot.careNm, spot.lat, spot.lng])
+            )
+          );
+          console.log(data);
         })
         .catch((error) => {
           console.log(error);
@@ -36,12 +46,15 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1 className="title">동물보호센터</h1>
-      <div className="container">
-        <List items={items} />
-        <Map locations={locations} />
-      </div>
+    <div className="App">
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/anouncement" element={<AnouncementPet />} />
+          <Route path="/shelter" element={<Shelter />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };

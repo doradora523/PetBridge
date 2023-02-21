@@ -1,10 +1,13 @@
 import React from "react";
 import { GoogleMap, LoadScriptNext, MarkerF } from "@react-google-maps/api";
+import { useSelector } from "react-redux";
 
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 
-function Map({ locations }) {
-  const centerArray = locations.map((location) => [
+function Map() {
+  const locations = useSelector( state => state.locations)
+  console.log('locations: ',locations)
+  const centerArray = locations&&locations.map((location) => [
     location[0],
     location[1],
     location[2],
@@ -19,7 +22,7 @@ function Map({ locations }) {
         center={center}
         mapContainerClassName="map-container"
       >
-        {centerArray.map((spot, index) => (
+        {centerArray&&centerArray.map((spot, index) => (
           <MarkerF
             key={index}
             label={spot[0]}

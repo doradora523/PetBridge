@@ -47,21 +47,30 @@ table {
 li {
   list-style: none;
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 
-.title {
-  position: fixed;
-  top: 0;
-  left: 30%;
-  z-index: 2;
-  width: 70%;
-  font-size: 2.2em;
-  line-height: 2em;
-  font-weight: bold;
-  color: #fff;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
+  .logo {
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
+  
+  .nav {
+    display: flex;
+  
+    h2 {
+      padding: 10px 15px;
+      border: 1px solid transparent;
+      border-radius: 20px 0 20px 0;
+      background-color: #FF7D7D;
+      color: #fff;
+      }
+      }
 .container {
   display: flex;
   justify-content: space-between;
