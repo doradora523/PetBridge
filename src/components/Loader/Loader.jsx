@@ -9,7 +9,7 @@ const Loader = () => {
         <img
           src="https://media4.giphy.com/media/H4DjXQXamtTiIuCcRU/200.webp?cid=ecf05e47mqm11tv9d6g11s39is1edpl12r94h7kpypzcu60n&rid=200.webp&ct=g"
           className="loading-image"
-          alt="loading cat"
+          alt="loading"
         />
       </div>
     </div>

@@ -14,7 +14,7 @@ import Loader from "./components/Loader/Loader";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const REQUEST_URL = `${process.env.REACT_APP_REQUEST_URL}?serviceKey=${API_KEY}`;
 const REQUEST_PARAMS = {
-  numOfRows: 20,
+  numOfRows: 50,
   pageNo: 1,
   _type: "json",
 };
@@ -23,30 +23,36 @@ const App = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.shelter.isLoading);
 
+  let selectedOption = useSelector((state) => state.shelter.selectedOption);
+
   useEffect(() => {
     dispatch(shelterSlice.actions.isLoading(true));
     const getData = () => {
       axios
-        .get(REQUEST_URL, {
-          params: REQUEST_PARAMS,
-        })
+        .get(REQUEST_URL, { params: REQUEST_PARAMS })
         .then((res) => {
+          const data = res.data.response.body.items.item;
+
           dispatch(shelterSlice.actions.isLoading(false));
-          const data = res.data.response.body.items;
-          dispatch(shelterSlice.actions.getItems(data.item));
+          dispatch(shelterSlice.actions.getItems(data));
           dispatch(
             shelterSlice.actions.getLocations(
-              data.item.map((spot) => [spot.careNm, spot.lat, spot.lng])
+              data.map((spot) => [spot.careNm, spot.lat, spot.lng])
             )
           );
-          console.log(data);
+
+          const filteredData = data.filter(
+            (data) => data.orgNm.split(" ")[0] === selectedOption
+          );
+          console.log(filteredData);
+          dispatch(shelterSlice.actions.setFilteredItems(filteredData));
         })
         .catch((error) => {
-          console.log(error);
+          console.log("getData Error :", error);
         });
     };
     getData();
-  }, []);
+  }, [selectedOption]);
 
   return (
     <div className="App">

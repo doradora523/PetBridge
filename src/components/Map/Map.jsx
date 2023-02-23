@@ -7,20 +7,17 @@ const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 function Map() {
   const locations = useSelector((state) => state.shelter.locations);
   const center = useSelector((state) => state.shelter.center);
-  console.log(center);
-
   const centerArray =
     locations &&
     locations.map((location) => [location[0], location[1], location[2]]);
-  console.log(centerArray);
 
-  const clickMarkerHandler = (spot) => {
-    console.log(spot);
-  };
+  // const clickMarkerHandler = (spot) => {
+  //   console.log(spot);
+  // };
   return (
     <LoadScriptNext googleMapsApiKey={MAP_API_KEY}>
       <GoogleMap
-        zoom={11}
+        zoom={12}
         center={center}
         mapContainerClassName="map-container"
       >
@@ -30,7 +27,7 @@ function Map() {
               key={index}
               label={spot[0]}
               position={{ lat: parseFloat(spot[1]), lng: parseFloat(spot[2]) }}
-              onClick={clickMarkerHandler(spot[0])}
+              // onClick={clickMarkerHandler(spot[0])}
             />
           ))}
       </GoogleMap>
