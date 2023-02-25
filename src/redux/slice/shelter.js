@@ -41,7 +41,7 @@ const shelterSlice = createSlice({
     getLocations(state, action) {
       state.locations = action.payload;
     },
-    setClickCenter(state, action) {
+    setCenter(state, action) {
       state.center = action.payload;
     },
     isLoading(state, action) {

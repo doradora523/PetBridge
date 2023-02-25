@@ -22,36 +22,46 @@ const REQUEST_PARAMS = {
 const App = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.shelter.isLoading);
+  const selectedOption = useSelector((state) => state.shelter.selectedOption);
+  const locations = useSelector((state) => state.shelter.locations);
+  const center = useSelector((state) => state.shelter.center);
 
-  let selectedOption = useSelector((state) => state.shelter.selectedOption);
-
+  console.log("center", center);
   useEffect(() => {
-    dispatch(shelterSlice.actions.isLoading(true));
-    const getData = () => {
-      axios
-        .get(REQUEST_URL, { params: REQUEST_PARAMS })
-        .then((res) => {
-          const data = res.data.response.body.items.item;
-
-          dispatch(shelterSlice.actions.isLoading(false));
-          dispatch(shelterSlice.actions.getItems(data));
-          dispatch(
-            shelterSlice.actions.getLocations(
-              data.map((spot) => [spot.careNm, spot.lat, spot.lng])
-            )
-          );
-
-          const filteredData = data.filter(
-            (data) => data.orgNm.split(" ")[0] === selectedOption
-          );
-          console.log(filteredData);
-          dispatch(shelterSlice.actions.setFilteredItems(filteredData));
-        })
-        .catch((error) => {
-          console.log("getData Error :", error);
+    const getShelterData = async () => {
+      try {
+        dispatch(shelterSlice.actions.isLoading(true));
+        const response = await axios.get(REQUEST_URL, {
+          params: REQUEST_PARAMS,
         });
+        const data = response.data.response.body.items.item;
+        const filteredData = await data.filter(
+          (data) => data.orgNm.split(" ")[0] === selectedOption
+        );
+
+        dispatch(shelterSlice.actions.getItems(data));
+        dispatch(shelterSlice.actions.setFilteredItems(filteredData));
+        dispatch(
+          shelterSlice.actions.getLocations(
+            filteredData.map((spot) => [spot.careNm, spot.lat, spot.lng])
+          )
+        );
+        const availableCenter = locations.filter(
+          (location) => location[1] !== undefined
+        );
+        dispatch(
+          shelterSlice.actions.setCenter({
+            lat: availableCenter[0][1],
+            lng: availableCenter[0][2],
+          })
+        );
+      } catch (error) {
+        console.log("getData Error :", error);
+      } finally {
+        dispatch(shelterSlice.actions.isLoading(false));
+      }
     };
-    getData();
+    getShelterData();
   }, [selectedOption]);
 
   return (

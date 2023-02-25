@@ -10,14 +10,12 @@ function Map() {
   const centerArray =
     locations &&
     locations.map((location) => [location[0], location[1], location[2]]);
+  console.log("locations", locations);
 
-  // const clickMarkerHandler = (spot) => {
-  //   console.log(spot);
-  // };
   return (
     <LoadScriptNext googleMapsApiKey={MAP_API_KEY}>
       <GoogleMap
-        zoom={12}
+        zoom={10}
         center={center}
         mapContainerClassName="map-container"
       >
@@ -27,7 +25,6 @@ function Map() {
               key={index}
               label={spot[0]}
               position={{ lat: parseFloat(spot[1]), lng: parseFloat(spot[2]) }}
-              // onClick={clickMarkerHandler(spot[0])}
             />
           ))}
       </GoogleMap>

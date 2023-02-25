@@ -5,7 +5,7 @@ import Selector from "./Selector";
 const List = () => {
   let filteredItems = useSelector((state) => state.shelter.filteredItems);
   let selectedOption = useSelector((state) => state.shelter.selectedOption);
-  console.log(filteredItems);
+
   return (
     <div className="listContainer">
       <div className="listTitle">
@@ -32,7 +32,6 @@ const List = () => {
                   ) : (
                     <></>
                   )}
-
                   <p>
                     {item.weekOprEtime && item.weekOprEtime !== ":" ? (
                       <span>
