@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { HomeOutlined, SearchOutlined } from "@ant-design/icons";
+
 const Header = () => {
   return (
     <div className="header">
@@ -9,7 +10,7 @@ const Header = () => {
           <h1 className="logo">PET SHELTER</h1>
         </Link>
         <div className="nav">
-          <Link to={"/Anouncement"}>
+          <Link to={"/Announcement"}>
             <h2>
               <SearchOutlined />
               &nbsp; 분양공고

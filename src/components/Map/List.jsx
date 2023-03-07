@@ -1,10 +1,27 @@
 import React from "react";
 import { Card } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Selector from "./Selector";
+import shelterSlice from "../../redux/slice/shelter";
+
 const List = () => {
-  let filteredItems = useSelector((state) => state.shelter.filteredItems);
-  let selectedOption = useSelector((state) => state.shelter.selectedOption);
+  const dispatch = useDispatch();
+
+  const filteredItems = useSelector((state) => state.shelter.filteredItems);
+  const selectedOption = useSelector((state) => state.shelter.selectedOption);
+  const availableCenter = useSelector((state) => state.shelter.availableCenter);
+
+  const focusMarker = (e) => {
+    const focusCenter = availableCenter.find(
+      (c) => c[0] === e.target.innerHTML
+    );
+    dispatch(
+      shelterSlice.actions.setCenter({
+        lat: focusCenter[1],
+        lng: focusCenter[2],
+      })
+    );
+  };
 
   return (
     <div className="listContainer">
@@ -18,7 +35,12 @@ const List = () => {
           <>
             {filteredItems &&
               filteredItems.map((item, index) => (
-                <Card key={index} title={item.careNm} className="shelter_name">
+                <Card
+                  key={index}
+                  title={item.careNm}
+                  className="shelter_name"
+                  onClick={focusMarker}
+                >
                   <p>
                     {item.saveTrgtAnimal ? (
                       <span>구조대상동물 : {item.saveTrgtAnimal}</span>

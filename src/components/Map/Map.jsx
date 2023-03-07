@@ -1,7 +1,7 @@
 import React from "react";
 import { GoogleMap, LoadScriptNext, MarkerF } from "@react-google-maps/api";
 import { useSelector } from "react-redux";
-
+import { IoPawSharp } from "react-icons/io5";
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 
 function Map() {
@@ -10,8 +10,6 @@ function Map() {
   const centerArray =
     locations &&
     locations.map((location) => [location[0], location[1], location[2]]);
-  console.log("locations", locations);
-
   return (
     <LoadScriptNext googleMapsApiKey={MAP_API_KEY}>
       <GoogleMap

@@ -4,6 +4,7 @@ const initialState = {
   locations: [],
   items: [],
   filteredItems: [],
+  availableCenter: [],
   center: { lat: 37.54686, lng: 126.95838 },
   isLoading: false,
   selectedOption: null,
@@ -37,6 +38,9 @@ const shelterSlice = createSlice({
     },
     setFilteredItems(state, action) {
       state.filteredItems = action.payload;
+    },
+    setAvailableCenter(state, action) {
+      state.availableCenter = action.payload;
     },
     getLocations(state, action) {
       state.locations = action.payload;

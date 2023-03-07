@@ -10,7 +10,6 @@ const Selector = () => {
 
   const handleSelectedChange = (selectedOption) => {
     dispatch(shelterSlice.actions.setSelectedOption(selectedOption));
-    console.log(selectedOption);
   };
 
   return (
