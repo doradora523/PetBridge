@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getShelterData } from "../api/shelterAPI";
 
 const initialState = {
   locations: [],
@@ -6,7 +7,8 @@ const initialState = {
   filteredItems: [],
   availableCenter: [],
   center: { lat: 37.54686, lng: 126.95838 },
-  isLoading: false,
+  loading: false,
+  error: null,
   selectedOption: null,
   options: [
     { value: "서울특별시" },
@@ -33,9 +35,6 @@ const shelterSlice = createSlice({
   name: "shelter",
   initialState,
   reducers: {
-    getItems(state, action) {
-      state.items = action.payload;
-    },
     setFilteredItems(state, action) {
       state.filteredItems = action.payload;
     },
@@ -48,12 +47,23 @@ const shelterSlice = createSlice({
     setCenter(state, action) {
       state.center = action.payload;
     },
-    isLoading(state, action) {
-      state.isLoading = action.payload;
-    },
     setSelectedOption(state, action) {
       state.selectedOption = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getShelterData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getShelterData.fulfilled, (state, action) => {
+      state.items = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getShelterData.rejected, (state, action) => {
+      state.loading = false;
+      state.items = [];
+      state.error = action.error.message;
+    });
   },
 });
 

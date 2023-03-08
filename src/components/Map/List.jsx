@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import Selector from "./Selector";
 import shelterSlice from "../../redux/slice/shelter";
+import { getShelterData } from "../../redux/api/shelterAPI";
 
 const List = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,11 @@ const List = () => {
       })
     );
   };
+
+  // Get Items data
+  useEffect(() => {
+    dispatch(getShelterData());
+  }, []);
 
   return (
     <div className="listContainer">

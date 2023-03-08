@@ -1,15 +1,56 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GoogleMap, LoadScriptNext, MarkerF } from "@react-google-maps/api";
-import { useSelector } from "react-redux";
-import { IoPawSharp } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import shelterSlice from "../../redux/slice/shelter";
+
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 
-function Map() {
+const Map = () => {
+  const dispatch = useDispatch();
+
   const locations = useSelector((state) => state.shelter.locations);
   const center = useSelector((state) => state.shelter.center);
+  const filteredItems = useSelector((state) => state.shelter.filteredItems);
+
   const centerArray =
     locations &&
     locations.map((location) => [location[0], location[1], location[2]]);
+
+  // Get Locations
+  useEffect(() => {
+    const locationData = filteredItems.map((spot) => [
+      spot.careNm,
+      spot.lat,
+      spot.lng,
+    ]);
+    dispatch(shelterSlice.actions.getLocations(locationData));
+  }, [filteredItems]);
+
+  // Get Center
+  useEffect(() => {
+    const getCenter = () => {
+      if (locations.length > 0) {
+        const availableCenterData = locations.filter(
+          (location) => location[1] !== "undefined"
+        );
+        dispatch(shelterSlice.actions.setAvailableCenter(availableCenterData));
+        console.log("availableCenter:", availableCenterData);
+
+        const centerData = availableCenterData.filter(
+          (center) => center[1] && center[2] !== "null"
+        );
+        dispatch(
+          shelterSlice.actions.setCenter({
+            lat: centerData[0][1],
+            lng: centerData[0][2],
+          })
+        );
+      }
+    };
+    
+    getCenter();
+  }, [locations]);
+
   return (
     <LoadScriptNext googleMapsApiKey={MAP_API_KEY}>
       <GoogleMap
@@ -28,5 +69,5 @@ function Map() {
       </GoogleMap>
     </LoadScriptNext>
   );
-}
+};
 export default Map;

@@ -1,3 +1,4 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -8,14 +9,13 @@ const REQUEST_PARAMS = {
   _type: "json",
 };
 
-export const getShelterData = async () => {
-  try {
+export const getShelterData = createAsyncThunk(
+  "shelter/getShelterData",
+  async () => {
     const response = await axios.get(REQUEST_URL, {
       params: REQUEST_PARAMS,
     });
     const data = response.data.response.body.items.item;
     return data;
-  } catch (error) {
-    console.log("getData Error :", error);
   }
-};
+);

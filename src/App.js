@@ -9,8 +9,6 @@ import Loader from "./components/Loader/Loader";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  const isLoading = useSelector((state) => state.shelter.isLoading);
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -18,14 +16,12 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/announcement" element={<AnnouncementPet />} />
-          <Route
-            path="/shelter"
-            element={isLoading ? <Loader /> : <Shelter />}
-          />
+          <Route path="/shelter" element={<Shelter />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
+
 };
 
 export default App;
