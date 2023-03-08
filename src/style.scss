@@ -215,3 +215,32 @@ li {
     }
   }
 }
+
+//announcement
+
+.announcement {
+  padding-top: 250px;
+
+  .center {
+    max-width: 1600px;
+
+    .cardWrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+
+      .ant-card {
+        margin: 0 10px 20px;
+
+        .characteristic {
+          margin-top: 20px;
+          padding: 5px;
+          font-size: 13px;
+          color: #fff;
+          background-color: rgb(22, 193, 70);
+        }
+      }
+    }
+  }
+}
