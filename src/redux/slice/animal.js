@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   items: [],
   openModal: false,
+  itemDetails: [],
 };
 
 const animalSlice = createSlice({
@@ -14,6 +15,9 @@ const animalSlice = createSlice({
     },
     setOpenModal(state, action) {
       state.openModal = action.payload;
+    },
+    getItemDetails(state, action) {
+      state.itemDetails = action.payload;
     },
   },
 });

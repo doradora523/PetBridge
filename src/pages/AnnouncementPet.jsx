@@ -1,9 +1,8 @@
-import React from 'react'
-import List from '../components/Animal.jsx/List';
-import Modal from '../components/Animal.jsx/Modal';
+import React from "react";
+import List from "../components/Animal/List";
+import Modal from "../components/Animal/Modal/Modal";
 
 const AnnouncementPet = () => {
-
   return (
     <div className="announcement">
       <div className="center">

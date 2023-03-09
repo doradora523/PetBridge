@@ -6,7 +6,6 @@ import shelterSlice from "../../redux/slice/shelter";
 
 const List = () => {
   const dispatch = useDispatch();
-
   
   const filteredItems = useSelector((state) => state.shelter.filteredItems);
   const selectedOption = useSelector((state) => state.shelter.selectedOption);
