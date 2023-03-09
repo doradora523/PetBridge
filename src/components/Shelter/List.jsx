@@ -3,11 +3,11 @@ import { Card } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import Selector from "./Selector";
 import shelterSlice from "../../redux/slice/shelter";
-import Loader from "../Loader/Loader";
 
 const List = () => {
   const dispatch = useDispatch();
 
+  
   const filteredItems = useSelector((state) => state.shelter.filteredItems);
   const selectedOption = useSelector((state) => state.shelter.selectedOption);
   const availableCenter = useSelector((state) => state.shelter.availableCenter);

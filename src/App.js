@@ -9,14 +9,24 @@ import Loader from "./components/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getShelterData } from "../src/redux/api/shelterAPI";
+import { getAnimalData } from "./redux/api/animalAPI";
+import animalSlice from "./redux/slice/animal";
 
 const App = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.shelter.loading);
 
-  // Get Items data
+  // Get Shelter Items data
   useEffect(() => {
     dispatch(getShelterData());
+  }, []);
+
+  // Get Animal Data
+  useEffect(() => {
+    getAnimalData().then((data) => {
+      dispatch(animalSlice.actions.getAnimalItems(data));
+      console.log(data);
+    });
   }, []);
 
   return (

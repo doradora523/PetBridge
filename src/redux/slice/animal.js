@@ -1,15 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: [],
+  items: [],
+  openModal: false,
 };
 
 const animalSlice = createSlice({
   name: "animal",
   initialState,
   reducers: {
-    getData(state, action) {
-      state.data = action.payload;
+    getAnimalItems(state, action) {
+      state.items = action.payload;
+    },
+    setOpenModal(state, action) {
+      state.openModal = action.payload;
     },
   },
 });
