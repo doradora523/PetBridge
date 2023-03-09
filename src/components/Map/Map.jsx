@@ -10,21 +10,11 @@ const Map = () => {
 
   const locations = useSelector((state) => state.shelter.locations);
   const center = useSelector((state) => state.shelter.center);
-  const filteredItems = useSelector((state) => state.shelter.filteredItems);
 
   const centerArray =
     locations &&
     locations.map((location) => [location[0], location[1], location[2]]);
 
-  // Get Locations
-  useEffect(() => {
-    const locationData = filteredItems.map((spot) => [
-      spot.careNm,
-      spot.lat,
-      spot.lng,
-    ]);
-    dispatch(shelterSlice.actions.getLocations(locationData));
-  }, [filteredItems]);
 
   // Get Center
   useEffect(() => {
@@ -47,7 +37,7 @@ const Map = () => {
         );
       }
     };
-    
+
     getCenter();
   }, [locations]);
 

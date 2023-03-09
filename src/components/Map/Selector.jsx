@@ -10,6 +10,7 @@ const Selector = () => {
   const options = useSelector((state) => state.shelter.options);
   const items = useSelector((state) => state.shelter.items);
   const selectedOption = useSelector((state) => state.shelter.selectedOption);
+  const filteredItems = useSelector((state) => state.shelter.filteredItems);
 
   const handleSelectedChange = (selectedOption) => {
     dispatch(shelterSlice.actions.setSelectedOption(selectedOption));
@@ -24,13 +25,23 @@ const Selector = () => {
   //     items.filter((item) => item.orgNm.split(" ")[0] === selectedOption)
   // );
 
+  const selectFilteredData = items.filter(
+    (item) => item.orgNm.split(" ")[0] === selectedOption
+  );
   // Get Filtered Items
   useEffect(() => {
-    const filteredData = items.filter(
-      (item) => item.orgNm.split(" ")[0] === selectedOption
-    );
-    dispatch(shelterSlice.actions.setFilteredItems(filteredData));
+    dispatch(shelterSlice.actions.setFilteredItems(selectFilteredData));
   }, [selectedOption]);
+
+  // Get Locations
+  useEffect(() => {
+    const locationData = filteredItems.map((spot) => [
+      spot.careNm,
+      spot.lat,
+      spot.lng,
+    ]);
+    dispatch(shelterSlice.actions.getLocations(locationData));
+  }, [filteredItems]);
 
   return (
     <Select
