@@ -134,11 +134,6 @@ li {
         }
       }
     }
-    .map-container {
-      width: 700px;
-      height: 660px;
-      background-color: lightgrey;
-    }
   }
 }
 
@@ -329,7 +324,7 @@ li {
     .shelter-number {
       display: flex;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 0px;
       .call-button {
         width: 30px;
         height: 30px;

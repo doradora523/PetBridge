@@ -9,7 +9,7 @@ import Loader from "./components/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getShelterData } from "../src/redux/api/shelterAPI";
-import { getAnimalData } from "./redux/api/animalAPI";
+import { getAnimalsData } from "./redux/api/animalAPI";
 import animalSlice from "./redux/slice/animal";
 
 const App = () => {
@@ -23,10 +23,7 @@ const App = () => {
 
   // Get Animal Data
   useEffect(() => {
-    getAnimalData().then((data) => {
-      dispatch(animalSlice.actions.getAnimalItems(data));
-      console.log(data);
-    });
+    dispatch(getAnimalsData());
   }, []);
 
   return (
@@ -35,7 +32,10 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/announcement" element={<AnnouncementPet />} />
+          <Route
+            path="/announcement"
+            element={loading ? <Loader /> : <AnnouncementPet />}
+          />
           <Route path="/shelter" element={loading ? <Loader /> : <Shelter />} />
         </Routes>
       </BrowserRouter>

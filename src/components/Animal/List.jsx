@@ -1,19 +1,34 @@
 import { Card, Divider, Space, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import animalSlice from "../../redux/slice/animal";
+import Geocode from "react-geocode";
 
 const List = () => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.animal.items);
 
+  const getLocationHandler = (careAddr) => {
+    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
+    Geocode.setLanguage("kr");
+    Geocode.setRegion("ko");
+    Geocode.enableDebug();
+
+    try {
+      Geocode.fromAddress(careAddr).then((response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        dispatch(animalSlice.actions.getLocation({ lat, lng }));
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const getItemDetailsHandler = (d) => {
+    dispatch(animalSlice.actions.getItemDetails(d));
+  };
   const showDrawer = () => {
     dispatch(animalSlice.actions.setOpenModal(true));
-  };
-
-  const PassingItemData = (d) => {
-    dispatch(animalSlice.actions.getItemDetails(d));
   };
 
   return (
@@ -25,7 +40,8 @@ const List = () => {
             hoverable
             onClick={() => {
               showDrawer();
-              PassingItemData(d);
+              getItemDetailsHandler(d);
+              getLocationHandler(d.careAddr);
             }}
             style={{
               width: 350,
@@ -79,11 +95,6 @@ const List = () => {
                   <span>알 수 없음</span>
                 )}
               </Tag>
-              {/* <Tag color="lime">lime</Tag>
-              <Tag color="green">green</Tag>
-              <Tag color="cyan">cyan</Tag>
-              <Tag color="geekblue">geekblue</Tag>
-              <Tag color="purple">purple</Tag> */}
             </Space>
           </Card>
         ))}

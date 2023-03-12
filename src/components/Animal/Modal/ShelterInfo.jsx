@@ -18,7 +18,7 @@ const ShelterInfo = () => {
       );
     }
   };
-  
+
   return (
     <>
       <div>
@@ -56,9 +56,6 @@ const ShelterInfo = () => {
               >{`(${itemDetails.careTel})`}</a>
             </div>
           </div>
-        </div>
-        <div>
-          <Map />
         </div>
       </div>
     </>

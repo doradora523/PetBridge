@@ -4,7 +4,7 @@ import axios from "axios";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const REQUEST_URL = `${process.env.REACT_APP_SHELTER_REQUEST_URL}?serviceKey=${API_KEY}`;
 const REQUEST_PARAMS = {
-  numOfRows: 50,
+  numOfRows: 203,
   pageNo: 1,
   _type: "json",
 };

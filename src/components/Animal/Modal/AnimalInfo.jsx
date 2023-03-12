@@ -7,7 +7,7 @@ import { FaNeuter } from "react-icons/fa";
 
 const AnimalInfo = () => {
   const itemDetails = useSelector((state) => state.animal.itemDetails);
-
+  
   return (
     <>
       <div>

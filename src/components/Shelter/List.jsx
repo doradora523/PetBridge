@@ -6,15 +6,16 @@ import shelterSlice from "../../redux/slice/shelter";
 
 const List = () => {
   const dispatch = useDispatch();
-  
+
   const filteredItems = useSelector((state) => state.shelter.filteredItems);
   const selectedOption = useSelector((state) => state.shelter.selectedOption);
-  const availableCenter = useSelector((state) => state.shelter.availableCenter);
+  const locations = useSelector((state) => state.shelter.locations);
 
-  const focusMarker = (e) => {
-    const focusCenter = availableCenter.find(
-      (c) => c[0] === e.target.innerHTML
+  const focusMarkerHandler = (e) => {
+    const focusCenter = locations.find((location) =>
+      location[1] && [2] ? location[0] === e.target.innerHTML : null
     );
+    console.log({ focusCenter });
     dispatch(
       shelterSlice.actions.setCenter({
         lat: focusCenter[1],
@@ -39,7 +40,7 @@ const List = () => {
                   key={index}
                   title={item.careNm}
                   className="shelter_name"
-                  onClick={focusMarker}
+                  onClick={focusMarkerHandler}
                 >
                   <p>
                     {item.saveTrgtAnimal ? (
