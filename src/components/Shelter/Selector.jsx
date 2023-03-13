@@ -1,39 +1,38 @@
-import { createSelector } from "@reduxjs/toolkit";
-import { Select } from "antd";
-import { useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Select } from "antd";
 import shelterSlice from "../../redux/slice/shelter";
 
-const Selector = () => {
+const ShelterSelector = () => {
   const dispatch = useDispatch();
+  const { options, items, selectedOption } = useSelector(
+    (state) => state.shelter
+  );
 
-  const options = useSelector((state) => state.shelter.options);
-  const items = useSelector((state) => state.shelter.items);
-  const selectedOption = useSelector((state) => state.shelter.selectedOption);
-
-  const selectedItemsHandler = (selectedOption) => {
-    dispatch(shelterSlice.actions.setSelectedOption(selectedOption));
-
-    if (selectedOption) {
-      const selectFilteredData = items.filter(
-        (item) => item.orgNm.split(" ")[0] === selectedOption
-      );
-      dispatch(shelterSlice.actions.setFilteredItems(selectFilteredData));
-    }
-  };
+  const handleSelectChange = useCallback(
+    (value) => {
+      dispatch(shelterSlice.actions.setSelectedOption(value));
+      if (value) {
+        const filteredItems = items.filter(
+          (item) => item.orgNm.split(" ")[0] === value
+        );
+        dispatch(shelterSlice.actions.setFilteredItems(filteredItems));
+      }
+    },
+    [dispatch, items]
+  );
 
   return (
     <Select
       showSearch
-      style={{
-        width: 200,
-      }}
+      style={{ width: 200 }}
       placeholder="지역을 선택해주세요"
       optionFilterProp="children"
       options={options}
       value={selectedOption}
-      onChange={selectedItemsHandler}
+      onChange={handleSelectChange}
     />
   );
 };
-export default Selector;
+
+export default ShelterSelector;
