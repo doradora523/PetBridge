@@ -17,9 +17,7 @@ const Map = () => {
   const filteredItems = useSelector((state) => state.shelter.filteredItems);
   const locations = useSelector((state) => state.shelter.locations);
   const center = useSelector((state) => state.shelter.center);
-  const availableCenter = useSelector((state) => state.shelter.availableCenter);
-  // console.log({ filteredItems });
-  // console.log({ locations });
+  const [undefinedArray, setUndefinedArray] = useState([]);
 
   // Get Center
   const getCenter = () => {
@@ -36,48 +34,47 @@ const Map = () => {
     }
   };
 
-  // Get LatLng by address
+  // 주소값으로 좌표 받아오기
   const geoCoder = () => {
-    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
-    Geocode.setLanguage("en");
-    Geocode.setRegion("es");
-    Geocode.setLocationType("ROOFTOP");
-    // Geocode.enableDebug();
-
-    const getLatLng = locations.map((location) => {
-      Geocode.fromAddress(location[3])
+    const getLatLng = undefinedArray.map((item) => {
+      Geocode.setApiKey(MAP_API_KEY);
+      Geocode.setLanguage("en");
+      Geocode.setRegion("es");
+      Geocode.setLocationType("ROOFTOP");
+      // Geocode.enableDebug();
+      return Geocode.fromAddress(item[3])
         .then((response) => {
           const { lat, lng } = response.results[0].geometry.location;
-
-          const results = [
-            location[0],
-            { lat: parseFloat(lat), lng: parseFloat(lng) },
-          ];
-          console.log(results);
-          return results;
+          const result = [item[0], lat, lng];
+          return result;
         })
         .catch((error) => console.log(error));
     });
-
-    dispatch(shelterSlice.actions.setAvailableCenter(getLatLng));
-    console.log({ availableCenter });
+    console.log(getLatLng);
   };
 
-  // Get Locations
+  // Get Locations (센터명, 위도, 경도, 주소)
   useEffect(() => {
-    const locationData = filteredItems.map((spot) => [
-      spot.careNm,
-      parseFloat(spot.lat),
-      parseFloat(spot.lng),
-      spot.careAddr,
+    const locations = filteredItems.map((item) => [
+      item.careNm,
+      parseFloat(item.lat),
+      parseFloat(item.lng),
+      item.careAddr,
     ]);
-
-    dispatch(shelterSlice.actions.getLocations(locationData));
+    dispatch(shelterSlice.actions.getLocations(locations));
   }, [filteredItems]);
 
   // Get Center
   useEffect(() => {
     getCenter();
+
+    // 위도와 경도가 NaN 인 배열
+    const undefinedLatLng = locations.filter((item) =>
+      Number.isNaN(item[1] || item[2])
+    );
+
+    setUndefinedArray(undefinedLatLng);
+
     geoCoder();
   }, [locations]);
 
