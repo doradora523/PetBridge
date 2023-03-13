@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getShelterData } from "../api/shelterAPI";
 
 const initialState = {
-  locations: [],
+  locationsData: [],
+  newLocations: [],
   items: [],
   filteredItems: [],
-  availableCenter: [],
+  geoLocations: [],
   center: { lat: 37.54686, lng: 126.95838 },
   loading: false,
   error: null,
@@ -35,20 +36,23 @@ const shelterSlice = createSlice({
   name: "shelter",
   initialState,
   reducers: {
+    setSelectedOption(state, action) {
+      state.selectedOption = action.payload;
+    },
     setFilteredItems(state, action) {
       state.filteredItems = action.payload;
     },
-    setAvailableCenter(state, action) {
-      state.availableCenter = action.payload;
+    getLocationsData(state, action) {
+      state.locationsData = action.payload;
     },
-    getLocations(state, action) {
-      state.locations = action.payload;
+    setGeoLocations(state, action) {
+      state.geoLocations = action.payload;
+    },
+    setNewLocations(state, action) {
+      state.newLocations = action.payload;
     },
     setCenter(state, action) {
       state.center = action.payload;
-    },
-    setSelectedOption(state, action) {
-      state.selectedOption = action.payload;
     },
   },
   extraReducers: (builder) => {

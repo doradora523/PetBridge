@@ -9,11 +9,11 @@ const List = () => {
 
   const filteredItems = useSelector((state) => state.shelter.filteredItems);
   const selectedOption = useSelector((state) => state.shelter.selectedOption);
-  const locations = useSelector((state) => state.shelter.locations);
+  const newLocations = useSelector((state) => state.shelter.newLocations);
 
   const focusMarkerHandler = (e) => {
-    const focusCenter = locations.find((location) =>
-      location[1] && [2] ? location[0] === e.target.innerHTML : null
+    const focusCenter = newLocations.find(
+      (location) => location[0] === e.target.innerHTML
     );
     console.log({ focusCenter });
     dispatch(

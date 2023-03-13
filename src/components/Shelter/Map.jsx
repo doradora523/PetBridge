@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleMap, LoadScriptNext, MarkerF } from "@react-google-maps/api";
 import { useDispatch, useSelector } from "react-redux";
 import shelterSlice from "../../redux/slice/shelter";
@@ -15,82 +15,122 @@ const containerStyle = {
 const Map = () => {
   const dispatch = useDispatch();
   const filteredItems = useSelector((state) => state.shelter.filteredItems);
-  const locations = useSelector((state) => state.shelter.locations);
+  const locationsData = useSelector((state) => state.shelter.locationsData);
   const center = useSelector((state) => state.shelter.center);
+  const geoLocations = useSelector((state) => state.shelter.geoLocations);
+  const newLocations = useSelector((state) => state.shelter.newLocations);
   const [undefinedArray, setUndefinedArray] = useState([]);
 
-  // Get Center
-  const getCenter = () => {
-    if (locations.length > 0) {
-      const centerData = locations.filter(
-        (center) => center[1] && center[2] !== "null"
-      );
-      dispatch(
-        shelterSlice.actions.setCenter({
-          lat: centerData[0][1],
-          lng: centerData[0][2],
-        })
-      );
-    }
-  };
-
-  // 주소값으로 좌표 받아오기
-  const geoCoder = () => {
-    const getLatLng = undefinedArray.map((item) => {
-      Geocode.setApiKey(MAP_API_KEY);
-      Geocode.setLanguage("en");
-      Geocode.setRegion("es");
-      Geocode.setLocationType("ROOFTOP");
-      // Geocode.enableDebug();
-      return Geocode.fromAddress(item[3])
-        .then((response) => {
-          const { lat, lng } = response.results[0].geometry.location;
-          const result = [item[0], lat, lng];
-          return result;
-        })
-        .catch((error) => console.log(error));
-    });
-    console.log(getLatLng);
-  };
-
-  // Get Locations (센터명, 위도, 경도, 주소)
   useEffect(() => {
-    const locations = filteredItems.map((item) => [
+    console.log({ filteredItems });
+    console.log({ locationsData });
+    console.log({ undefinedArray });
+    console.log({ geoLocations });
+    console.log({ newLocations });
+    console.log("rendering...");
+  });
+
+  useEffect(() => {
+    if (!filteredItems) return; // 필터링 대상이 없으면 무시
+
+    // Get Locations (센터명, 위도, 경도, 주소)
+    const filteredLocationsData = filteredItems.map((item) => [
       item.careNm,
       parseFloat(item.lat),
       parseFloat(item.lng),
       item.careAddr,
     ]);
-    dispatch(shelterSlice.actions.getLocations(locations));
+
+    dispatch(shelterSlice.actions.getLocationsData(filteredLocationsData));
   }, [filteredItems]);
 
-  // Get Center
   useEffect(() => {
-    getCenter();
-
+    if (!locationsData) return; // locationsData가 없으면 무시
     // 위도와 경도가 NaN 인 배열
-    const undefinedLatLng = locations.filter((item) =>
-      Number.isNaN(item[1] || item[2])
+    const undefinedLatLng = locationsData.filter(
+      (item) => Number.isNaN(item[1]) || Number.isNaN(item[2])
     );
 
     setUndefinedArray(undefinedLatLng);
+  }, [locationsData]);
 
-    geoCoder();
-  }, [locations]);
+  useEffect(() => {
+    // 주소값으로 좌표 받아오기
+    const geoCoder = async () => {
+      try {
+        const getLatLng = await Promise.all(
+          undefinedArray.map((item) => {
+            Geocode.setApiKey(MAP_API_KEY);
+            Geocode.setLanguage("en");
+            Geocode.setRegion("es");
+            Geocode.setLocationType("ROOFTOP");
+            // Geocode.enableDebug();
+
+            return Geocode.fromAddress(item[3])
+              .then((response) => {
+                const { lat, lng } = response.results[0].geometry.location;
+                const result = [
+                  item[0],
+                  parseFloat(lat),
+                  parseFloat(lng),
+                  item[3],
+                ];
+                return result;
+              })
+              .catch((error) => {
+                console.log(error);
+                return null;
+              });
+          })
+        );
+
+        // 필터링된 결과가 없는 경우 빈 배열 반환
+        const filteredLatLng = getLatLng.filter((item) => item !== null);
+        dispatch(shelterSlice.actions.setGeoLocations(filteredLatLng));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (undefinedArray.length > 0) {
+      geoCoder();
+    }
+  }, [undefinedArray]);
+
+  useEffect(() => {
+    // filter된 locations와 geoLocations의 배열을 새로운 변수에 담아주기
+    const newLocationsData = locationsData
+      .filter((item) => !Number.isNaN(item[1] || item[2]))
+      .concat(geoLocations);
+
+    dispatch(shelterSlice.actions.setNewLocations(newLocationsData));
+  }, [geoLocations]);
+
+  // Get Center
+  useEffect(() => {
+    const getCenter = () => {
+      if (newLocations.length > 0) {
+        dispatch(
+          shelterSlice.actions.setCenter({
+            lat: newLocations[0][1],
+            lng: newLocations[0][2],
+          })
+        );
+      }
+    };
+  
+    getCenter();
+  }, [newLocations]);
 
   return (
     <LoadScriptNext googleMapsApiKey={MAP_API_KEY}>
-      <GoogleMap zoom={10} center={center} mapContainerStyle={containerStyle}>
-        {locations &&
-          locations.map((spot, index) => (
-            <MarkerF
-              key={index}
-              label={spot[0]}
-              position={{ lat: spot[1], lng: spot[2] }}
-            />
+      <GoogleMap zoom={14} center={center} mapContainerStyle={containerStyle}>
+        {newLocations.length > 0 &&
+          newLocations.map((spot, index) => (
+            <MarkerF key={index} position={{ lat: spot[1], lng: spot[2] }} />
           ))}
       </GoogleMap>
     </LoadScriptNext>
   );
 };
-export default memo(Map);
+export default Map;
