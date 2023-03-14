@@ -2,14 +2,15 @@ import React from "react";
 import { Card, Divider, Space, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useDispatch, useSelector } from "react-redux";
+import { HiHeart } from "react-icons/hi";
 import animalSlice from "../../redux/slice/animal";
 import Geocode from "react-geocode";
 import Pagination from "./Pagination";
 import Loader from "../Loader/Loader.jsx";
 const List = () => {
   const dispatch = useDispatch();
-  const { items, pageCount, loading } = useSelector((state) => state.animal);
-  console.log({ pageCount });
+  const { items, loading, favorites } = useSelector((state) => state.animal);
+
   const getLocationHandler = (careAddr) => {
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
     Geocode.setLanguage("kr");
@@ -25,13 +26,21 @@ const List = () => {
       console.error(error);
     }
   };
+
   const getItemDetailsHandler = (d) => {
     dispatch(animalSlice.actions.getItemDetails(d));
   };
+
   const showDrawer = () => {
     dispatch(animalSlice.actions.setOpenModal(true));
   };
 
+  const handleFavorite = (item) => {
+    favorites.includes(item)
+      ? dispatch(animalSlice.actions.removeFavorites(item))
+      : dispatch(animalSlice.actions.setFavorites(item));
+  };
+  
   return loading ? (
     <Loader />
   ) : (
@@ -42,11 +51,6 @@ const List = () => {
             <Card
               key={d.desertionNo}
               hoverable
-              onClick={() => {
-                showDrawer();
-                getItemDetailsHandler(d);
-                getLocationHandler(d.careAddr);
-              }}
               style={{
                 width: 350,
                 height: 550,
@@ -61,9 +65,18 @@ const List = () => {
                     height: 250,
                     objectFit: "scale-down",
                   }}
+                  onClick={() => {
+                    showDrawer();
+                    getItemDetailsHandler(d);
+                    getLocationHandler(d.careAddr);
+                  }}
                 />
               }
             >
+              <HiHeart
+                className="faviorite"
+                onClick={() => handleFavorite(d.desertionNo)}
+              />
               <Meta
                 title={d.kindCd}
                 description={`구조 : (${d.happenDt.slice(

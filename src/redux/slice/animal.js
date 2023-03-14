@@ -11,8 +11,9 @@ const initialState = {
   error: null,
   currentPage: 1,
   pageCount: 1,
-  perPage: 30,
+  perPage: 32,
   loading: false,
+  favorites: [],
 };
 const animalSlice = createSlice({
   name: "animal",
@@ -29,6 +30,14 @@ const animalSlice = createSlice({
     },
     setPage(state, action) {
       state.currentPage = action.payload;
+    },
+    setFavorites(state, action) {
+      state.favorites = [...state.favorites, action.payload];
+    },
+    removeFavorites(state, action) {
+      state.favorites = state.favorites.filter(
+        (item) => item !== action.payload
+      );
     },
   },
   extraReducers: (builder) => {

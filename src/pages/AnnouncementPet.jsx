@@ -1,15 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import List from "../components/Animal/List";
 import Modal from "../components/Animal/Modal/Modal";
+import Loader from "../components/Loader/Loader";
+import { fetchAnimalsData } from "../redux/api/animalAPI";
 
 const AnnouncementPet = () => {
+  const dispatch = useDispatch();
+  const { currentPage, isLoading } = useSelector((state) => state.animal);
+
+  // Get Animal Data
+  useEffect(() => {
+    dispatch(fetchAnimalsData({ pageNo: currentPage }));
+  }, [dispatch, currentPage]);
+
   return (
-    <div className="announcement">
-      <div className="center">
-        <List />
-        <Modal />
-      </div>
-    </div>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="announcement">
+          <div className="center">
+            <List />
+            <Modal />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
