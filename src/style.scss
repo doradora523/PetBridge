@@ -125,14 +125,14 @@ li {
         .ant-card-body {
           font-size: 15px;
           div {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              width: 100%;
-              height: 100%;
-            }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
           }
-                }
+        }
+      }
     }
   }
 }
@@ -239,42 +239,41 @@ li {
         }
       }
     }
-.pagination-container {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  margin: 50px 0;
-  font-size: 20px;
-  line-height: 2rem;
+    .pagination-container {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      margin: 50px 0;
+      font-size: 20px;
+      line-height: 2rem;
 
-  li {
-    list-style: none;
-    margin: 0 5px;
-    cursor: pointer;
-    color: #fff;
-    background-color: rgb(22, 193, 70);
-    border: 1px solid rgb(22, 193, 70);
-    border-radius: 20px;
-    transition: all 0.3s;
+      li {
+        list-style: none;
+        margin: 0 5px;
+        cursor: pointer;
+        color: #fff;
+        background-color: rgb(22, 193, 70);
+        border: 1px solid rgb(22, 193, 70);
+        border-radius: 20px;
+        transition: all 0.3s;
 
+        &:hover {
+          color: rgb(22, 193, 70);
+          background-color: rgb(247, 255, 250);
+        }
 
-    &:hover {
-      color: rgb(22, 193, 70);
-      background-color: rgb(247, 255, 250);
+        a {
+          text-decoration: none;
+          padding: 0 10px;
+        }
+      }
+
+      .selected {
+        color: rgb(22, 193, 70);
+        background-color: rgb(247, 255, 250);
+      }
     }
-
-    a {
-      text-decoration: none;
-      padding: 0 10px;
-    }
-  }
-
-  .selected {
-    color: rgb(22, 193, 70);
-    background-color: rgb(247, 255, 250);
-  }
-}
   }
 }
 

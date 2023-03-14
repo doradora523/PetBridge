@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { GoogleMap, InfoWindow, InfoWindowF, LoadScriptNext, MarkerF } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  InfoWindowF,
+  LoadScriptNext,
+  MarkerF,
+} from "@react-google-maps/api";
 import { useDispatch, useSelector } from "react-redux";
 import shelterSlice from "../../redux/slice/shelter";
 import Geocode from "react-geocode";
@@ -20,8 +25,8 @@ const Map = () => {
   const [clickedMarker, setClickedMarker] = useState(null);
 
   const handleClickMarker = (spot) => {
-    setClickedMarker(spot)
-  }
+    setClickedMarker(spot);
+  };
 
   useEffect(() => {
     const getLocationsData = async () => {
@@ -41,7 +46,7 @@ const Map = () => {
 
               const response = await Geocode.fromAddress(item[1]);
               const { lat, lng } = response.results[0].geometry.location;
-              
+
               // geoLocations에 새로운 배열 담아주기
               return [
                 item[0],
@@ -90,24 +95,22 @@ const Map = () => {
         {newLocations.length > 0 &&
           newLocations.map((spot, index) => (
             <MarkerF
-            key={index}
-            position={{ lat: spot[1], lng: spot[2] }}
-            onClick={() => handleClickMarker(spot)}
-          >
-            {clickedMarker === spot ? (
-              <InfoWindowF
-                onCloseClick={() => setClickedMarker(null)}
-                position={{ lat: spot[1], lng: spot[2] }}
-              >
-                <div>
-                  <p>{spot[0]}</p>
-                  <p>{spot[3]}</p>
-                </div>
-              </InfoWindowF>
-            ) : null}
-          </MarkerF>
+              key={index}
+              position={{ lat: spot[1], lng: spot[2] }}
+              onClick={() => handleClickMarker(spot)}
+            >
+              {clickedMarker === spot ? (
+                <InfoWindowF
+                  onCloseClick={() => setClickedMarker(null)}
+                  position={{ lat: spot[1], lng: spot[2] }}
+                >
+                  <div>
+                    <p>{spot[0]}</p>
+                  </div>
+                </InfoWindowF>
+              ) : null}
+            </MarkerF>
           ))}
-        
       </GoogleMap>
     </LoadScriptNext>
   );

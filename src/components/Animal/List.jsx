@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import animalSlice from "../../redux/slice/animal";
 import Geocode from "react-geocode";
 import Pagination from "./Pagination";
-
+import Loader from "../Loader/Loader.jsx";
 const List = () => {
   const dispatch = useDispatch();
-  const {items, pageCount} = useSelector((state) => state.animal);
-  console.log({pageCount})
+  const { items, pageCount, loading } = useSelector((state) => state.animal);
+  console.log({ pageCount });
   const getLocationHandler = (careAddr) => {
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
     Geocode.setLanguage("kr");
@@ -32,7 +32,9 @@ const List = () => {
     dispatch(animalSlice.actions.setOpenModal(true));
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <>
       <ul className="cardWrap">
         {items &&

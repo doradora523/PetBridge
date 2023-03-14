@@ -52,8 +52,9 @@ const shelterSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getShelterData.fulfilled, (state, action) => {
-      state.items = action.payload;
       state.loading = false;
+      state.data = action.payload;
+      state.items = action.payload.items.item;
     });
     builder.addCase(getShelterData.rejected, (state, action) => {
       state.loading = false;

@@ -15,7 +15,7 @@ export const getShelterData = createAsyncThunk(
     const response = await axios.get(REQUEST_URL, {
       params: REQUEST_PARAMS,
     });
-    const data = response.data.response.body.items.item;
+    const data = response.data.response.body;
     return data;
   }
 );
