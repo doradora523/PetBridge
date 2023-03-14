@@ -4,18 +4,17 @@ import axios from "axios";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const REQUEST_URL = `${process.env.REACT_APP_ANIMAL_REQUEST_URL}?serviceKey=${API_KEY}`;
 const REQUEST_PARAMS = {
-  numOfRows: 30,
   pageNo: 1,
   _type: "json",
 };
 
-export const getAnimalsData = createAsyncThunk(
-  "animal/getAnimalsData",
-  async () => {
+export const fetchAnimalsData = createAsyncThunk(
+  "animal/fetchAnimalsData",
+  async ({ pageNo }) => {
     const response = await axios.get(REQUEST_URL, {
-      params: REQUEST_PARAMS,
+      params: { ...REQUEST_PARAMS, pageNo },
     });
-    const data = response.data.response.body.items.item;
-    return data;
+    console.log(response.data.response.body);
+    return response.data.response.body;
   }
 );

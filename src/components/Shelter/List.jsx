@@ -40,20 +40,14 @@ const List = () => {
                   className="shelter_name"
                   onClick={focusMarkerHandler}
                 >
-                  <p>
-                    {item.saveTrgtAnimal ? (
-                      <span>구조대상동물 : {item.saveTrgtAnimal}</span>
-                    ) : (
-                      <></>
-                    )}
-                  </p>
-                  <p>주소 : {item.careAddr}</p>
-                  {item.careTel !== "***********" ? (
-                    <p>전화번호 : {item.careTel}</p>
-                  ) : (
-                    <></>
+                  {item.saveTrgtAnimal && (
+                    <div>구조대상동물 : {item.saveTrgtAnimal}</div>
                   )}
-                  <p>
+                  <div>주소 : {item.careAddr}</div>
+                  {item.careTel !== "***********" && (
+                    <div>전화번호 : {item.careTel}</div>
+                  )}
+                  <div>
                     {item.weekOprEtime && item.weekOprEtime !== ":" ? (
                       <span>
                         평일 운영시간 : {item.weekOprStime}~{item.weekOprEtime}
@@ -70,8 +64,8 @@ const List = () => {
                     ) : (
                       <></>
                     )}
-                  </p>
-                  <p>
+                  </div>
+                  <div>
                     {item.weekendOprStime && item.weekendOprStime !== ":" ? (
                       <span>
                         주말 운영시간 : {item.weekendOprStime}~
@@ -89,8 +83,8 @@ const List = () => {
                     ) : (
                       <></>
                     )}
-                  </p>
-                  <p>
+                  </div>
+                  <div>
                     {item.closeDay !== "" &&
                     item.closeDay !== "0" &&
                     item.closeDay !== "1" &&
@@ -100,8 +94,8 @@ const List = () => {
                     ) : (
                       <></>
                     )}
-                  </p>
-                  <p>
+                  </div>
+                  <div>
                     {item.vetPersonCnt ? (
                       <span>
                         수의사 인원수 : {item.vetPersonCnt}&nbsp; &nbsp; &nbsp;
@@ -114,8 +108,8 @@ const List = () => {
                     ) : (
                       <></>
                     )}
-                  </p>
-                  <p>
+                  </div>
+                  <div>
                     {item.medicalCnt ? (
                       <span>
                         진료실수 : {item.medicalCnt}&nbsp; &nbsp; &nbsp;
@@ -142,12 +136,12 @@ const List = () => {
                     ) : (
                       <></>
                     )}
-                  </p>
+                  </div>
                 </Card>
               ))}
           </>
         ) : (
-          <p>가까운 지역의 센터를 검색해주세요.</p>
+          <div>가까운 지역의 센터를 검색해주세요.</div>
         )}
       </ul>
     </div>

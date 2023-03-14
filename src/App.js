@@ -9,12 +9,12 @@ import Loader from "./components/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getShelterData } from "../src/redux/api/shelterAPI";
-import { getAnimalsData } from "./redux/api/animalAPI";
-import animalSlice from "./redux/slice/animal";
+import { fetchAnimalsData } from "./redux/api/animalAPI";
 
 const App = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.shelter.loading);
+  const { currentPage } = useSelector((state) => state.animal);
 
   // Get Shelter Items data
   useEffect(() => {
@@ -23,8 +23,8 @@ const App = () => {
 
   // Get Animal Data
   useEffect(() => {
-    dispatch(getAnimalsData());
-  }, []);
+    dispatch(fetchAnimalsData({ pageNo: currentPage }));
+  }, [dispatch, currentPage]);
 
   return (
     <div className="App">

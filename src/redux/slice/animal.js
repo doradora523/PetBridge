@@ -1,11 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAnimalsData } from "../api/animalAPI";
+import { fetchAnimalsData } from "../api/animalAPI";
 
 const initialState = {
+  data: [],
   items: [],
   openModal: false,
   itemDetails: [],
   location: { lat: null, lng: null },
+  status: "idle",
+  error: null,
+  currentPage: 1,
+  pageCount: 1,
+  perPage: 30,
+  loading: false,
 };
 const animalSlice = createSlice({
   name: "animal",
@@ -20,21 +27,28 @@ const animalSlice = createSlice({
     getLocation(state, action) {
       state.location = action.payload;
     },
+    setPage(state, action) {
+      state.currentPage = action.payload;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(getAnimalsData.pending, (state) => {
+    builder.addCase(fetchAnimalsData.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getAnimalsData.fulfilled, (state, action) => {
-      state.items = action.payload;
+    builder.addCase(fetchAnimalsData.fulfilled, (state, action) => {
       state.loading = false;
+      state.data = action.payload;
+      state.items = action.payload.items.item;
+      state.pageCount = Math.ceil(action.payload.totalCount / state.perPage);
     });
-    builder.addCase(getAnimalsData.rejected, (state, action) => {
+    builder.addCase(fetchAnimalsData.rejected, (state, action) => {
       state.loading = false;
-      state.items = [];
       state.error = action.error.message;
     });
   },
 });
+
+export const { setOpenModal, getItemDetails, getLocation, setPage } =
+  animalSlice.actions;
 
 export default animalSlice;
