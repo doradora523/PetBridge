@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import shelterSlice from "../../redux/slice/shelter";
-import Selector from "../public/Selector";
+import UseFilterForm from "../public/UseFilterForm";
 
 const ShelterFilter = () => {
   const dispatch = useDispatch();
@@ -23,13 +23,12 @@ const ShelterFilter = () => {
   );
 
   return (
-    <Selector 
-    placeholder="지역을 선택해주세요"
-    options={options}
-    value={selectedOption}
-    onChange={handleSelectChange}
+    <UseFilterForm
+      placeholder="지역을 선택해주세요"
+      options={options}
+      value={selectedOption}
+      onChange={handleSelectChange}
     />
-    
   );
 };
 

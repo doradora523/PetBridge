@@ -1,55 +1,55 @@
-import React, { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import Selector from '../public/Selector'
-import animalSlice from '../../redux/slice/animal';
-
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import UseFilterForm from "../public/UseFilterForm";
+import animalSlice from "../../redux/slice/animal";
 const AnimalFilter = () => {
   const dispatch = useDispatch();
-  const { region, type, items, selectedRegion, selectedType,filteredItems } = useSelector(
-    (state) => state.animal
-  );
-
+  const {
+    region,
+    type,
+    neuter,
+    items,
+    selectedRegion,
+    selectedType,
+    selectedNeuter,
+  } = useSelector((state) => state.animal);
 
   const handleSelectChange = useCallback(
-    (value, type) => {
-      if(type === 'region') {
+    (code, value, type) => {
+      if (type === "region") {
         dispatch(animalSlice.actions.setSelectedRegion(value));
-        if (value) {
-          const filteredItems = items.filter(
-            (item) => item.orgNm.split(" ")[0] === value
-          );
-          dispatch(animalSlice.actions.setFilteredItems(filteredItems));
-        }
       }
-      if(type === 'type') {
+      if (type === "type") {
         dispatch(animalSlice.actions.setSelectedType(value));
-        if (value) {
-          const filteredItems = items.filter(
-            (item) => item.kindCd === value
-          );
-          dispatch(animalSlice.actions.setFilteredItems(filteredItems));
-        }
+      }
+      if (type === "neuter") {
+        dispatch(animalSlice.actions.setSelectedNeuter(value));
       }
     },
-    [dispatch, items,filteredItems]
+    [dispatch, items]
   );
-  console.log({filteredItems})
   return (
     <div>
-      <Selector 
-         placeholder="지역"
-         options={region}
-         value={selectedRegion}
-         onChange={(value) => handleSelectChange(value, 'region')}
+      <UseFilterForm
+        placeholder="지역"
+        options={region}
+        value={selectedRegion}
+        onChange={(value, code) => handleSelectChange(value, code, "region")}
       />
-      <Selector 
-         placeholder="종류"
-         options={type}
-         value={selectedType}
-         onChange={(value) => handleSelectChange(value, 'type')}
+      <UseFilterForm
+        placeholder="종류"
+        options={type}
+        value={selectedType}
+        onChange={(value, code) => handleSelectChange(value, code, "type")}
+      />
+      <UseFilterForm
+        placeholder="중성화 여부"
+        options={neuter}
+        value={selectedNeuter}
+        onChange={(value, code) => handleSelectChange(value, code, "neuter")}
       />
     </div>
-  )
-}
+  );
+};
 
-export default AnimalFilter
+export default AnimalFilter;

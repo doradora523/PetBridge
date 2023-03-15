@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import RegionOptions from "../../components/public/RegionOptions";
+import { RegionOptions } from "../../components/public/FilterOptions";
 import { getShelterData } from "../api/shelterAPI";
 
 const initialState = {

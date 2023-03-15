@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import RegionOptions from "../../components/public/RegionOptions";
+import {
+  NeuterOptions,
+  RegionOptions,
+  TypeOptions,
+} from "../../components/public/FilterOptions";
+
 import { fetchAnimalsData } from "../api/animalAPI";
 
 const initialState = {
@@ -15,11 +20,12 @@ const initialState = {
   perPage: 32,
   loading: false,
   favorites: [],
-  filteredItems: [],
-  type: [{ value: "개" }, { value: "고양이" }, { value: "기타" }],
+  type: TypeOptions,
   region: RegionOptions,
-  selectedRegion: [],
-  selectedType: [],
+  neuter: NeuterOptions,
+  selectedRegion: null,
+  selectedType: null,
+  selectedNeuter: null,
 };
 const animalSlice = createSlice({
   name: "animal",
@@ -34,14 +40,14 @@ const animalSlice = createSlice({
     getLocation(state, action) {
       state.location = action.payload;
     },
-    setFilteredItems(state, action) {
-      state.filteredItems = action.payload;
-    },
     setSelectedRegion(state, action) {
       state.selectedRegion = action.payload;
     },
     setSelectedType(state, action) {
       state.selectedType = action.payload;
+    },
+    setSelectedNeuter(state, action) {
+      state.selectedNeuter = action.payload;
     },
     setPage(state, action) {
       state.currentPage = action.payload;
