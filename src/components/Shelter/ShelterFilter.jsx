@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Select } from "antd";
 import shelterSlice from "../../redux/slice/shelter";
+import Selector from "../public/Selector";
 
-const ShelterSelector = () => {
+const ShelterFilter = () => {
   const dispatch = useDispatch();
   const { options, items, selectedOption } = useSelector(
     (state) => state.shelter
@@ -23,16 +23,14 @@ const ShelterSelector = () => {
   );
 
   return (
-    <Select
-      showSearch
-      style={{ width: 200 }}
-      placeholder="지역을 선택해주세요"
-      optionFilterProp="children"
-      options={options}
-      value={selectedOption}
-      onChange={handleSelectChange}
+    <Selector 
+    placeholder="지역을 선택해주세요"
+    options={options}
+    value={selectedOption}
+    onChange={handleSelectChange}
     />
+    
   );
 };
 
-export default ShelterSelector;
+export default ShelterFilter;

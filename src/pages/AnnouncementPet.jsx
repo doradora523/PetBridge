@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import List from "../components/Animal/List";
+import AnimalList from "../components/Animal/AnimalList";
 import Modal from "../components/Animal/Modal/Modal";
 import Loader from "../components/Loader/Loader";
 import { fetchAnimalsData } from "../redux/api/animalAPI";
@@ -21,7 +21,7 @@ const AnnouncementPet = () => {
       ) : (
         <div className="announcement">
           <div className="center">
-            <List />
+            <AnimalList />
             <Modal />
           </div>
         </div>

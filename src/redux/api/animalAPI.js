@@ -15,6 +15,7 @@ export const fetchAnimalsData = createAsyncThunk(
     const response = await axios.get(REQUEST_URL, {
       params: { ...REQUEST_PARAMS, pageNo },
     });
+    console.log(response.data.response.body);
     return response.data.response.body;
   }
 );

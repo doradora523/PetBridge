@@ -7,6 +7,8 @@ import animalSlice from "../../redux/slice/animal";
 import Geocode from "react-geocode";
 import Pagination from "./Pagination";
 import Loader from "../Loader/Loader.jsx";
+import AnimalFilter from "./AnimalFilter";
+
 const List = () => {
   const dispatch = useDispatch();
   const { items, loading, favorites } = useSelector((state) => state.animal);
@@ -45,6 +47,7 @@ const List = () => {
     <Loader />
   ) : (
     <>
+      <AnimalFilter />
       <ul className="cardWrap">
         {items &&
           items.map((d) => (

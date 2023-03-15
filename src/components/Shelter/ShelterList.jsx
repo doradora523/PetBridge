@@ -1,10 +1,10 @@
 import React from "react";
 import { Card } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import Selector from "./Selector";
 import shelterSlice from "../../redux/slice/shelter";
+import ShelterFilter from "./ShelterFilter";
 
-const List = () => {
+const ShelterList = () => {
   const dispatch = useDispatch();
   const { filteredItems, selectedOption, newLocations } = useSelector(
     (state) => state.shelter
@@ -26,7 +26,7 @@ const List = () => {
     <div className="listContainer">
       <div className="listTitle">
         <h2>동물보호센터</h2>
-        <Selector />
+        <ShelterFilter />
       </div>
 
       <ul className="listWrap">
@@ -148,4 +148,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default ShelterList;
