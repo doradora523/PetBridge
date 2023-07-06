@@ -1,5 +1,10 @@
 https://github.com/doradora523/PetBridge/assets/94670754/9a440b34-c0d3-4883-a1f1-ea01f25a8842
 
+## Stacks
+```
+React, Redux-Toolkit, react-spring, Ant-design, SCSS
+```
+
 ## Description
 
 - 공공 API ([유기동물 정보 조회](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15098931), [동물보호센터](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15098915))에서 데이터를 받아와 유기동물 및 보호소 정보를 제공하는 서비스
