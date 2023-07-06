@@ -2,7 +2,6 @@ import React from "react";
 import { Card, Divider, Space, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useDispatch, useSelector } from "react-redux";
-import { HiHeart } from "react-icons/hi";
 import { animalActions } from "../../redux/slice/animal";
 import Geocode from "react-geocode";
 import Pagination from "./Pagination";

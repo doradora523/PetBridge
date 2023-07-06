@@ -12,7 +12,7 @@ const Shelter = () => {
   // Get Shelter Items data
   useEffect(() => {
     dispatch(getShelterData());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="container">

@@ -8,7 +8,6 @@ const AnimalFilter = () => {
     region,
     type,
     neuter,
-    items,
     selectedRegion,
     selectedType,
     selectedNeuter,
@@ -26,7 +25,7 @@ const AnimalFilter = () => {
         dispatch(animalActions.setSelectedNeuter(value));
       }
     },
-    [dispatch, items]
+    [dispatch]
   );
   return (
     <div className="filters">
