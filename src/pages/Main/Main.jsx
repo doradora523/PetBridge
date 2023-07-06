@@ -24,7 +24,7 @@ const Trail = ({ open, children }) => {
   );
 };
 
-const MainText = () => {
+const Main = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
 
@@ -45,4 +45,4 @@ const MainText = () => {
   );
 };
 
-export default MainText;
+export default Main;

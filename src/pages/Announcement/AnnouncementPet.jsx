@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AnimalList from "../components/Animal/AnimalList";
-import Modal from "../components/Animal/Modal/Modal";
-import Loader from "../components/Loader/Loader";
-import { fetchAnimalsData } from "../redux/api/animalAPI";
+import AnimalList from "../../components/Animal/AnimalList";
+import Modal from "../../components/Animal/Modal/Modal";
+import Loader from "../../components/Loader/Loader";
+import { fetchAnimalsData } from "../../redux/api/animalAPI";
+import "./style.scss";
 
 const AnnouncementPet = () => {
   const dispatch = useDispatch();

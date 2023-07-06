@@ -1,11 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import "./style.scss";
-import AnnouncementPet from "./pages/AnnouncementPet";
-import Header from "./pages/Header";
-import Main from "./pages/Main";
-import Shelter from "./pages/Shelter";
-import CheckList from "./pages/CheckList";
+import AnnouncementPet from "./pages/Announcement/AnnouncementPet";
+import Header from "./pages/Header/Header";
+import Main from "./pages/Main/Main";
+import Shelter from "./pages/Shelter/Shelter";
+import CheckList from "./pages/CheckList/CheckList";
 
 const App = () => {
   return (

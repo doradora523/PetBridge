@@ -5,6 +5,7 @@ import { animalActions } from "../../../redux/slice/animal";
 import Map from "./Map";
 import AnimalInfo from "./AnimalInfo";
 import ShelterInfo from "./ShelterInfo";
+import "./style.scss";
 
 const Modal = () => {
   const dispatch = useDispatch();

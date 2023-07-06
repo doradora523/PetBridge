@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { HomeOutlined, SearchOutlined } from "@ant-design/icons";
+import "./style.scss";
 
 const Header = () => {
   return (
@@ -13,13 +14,13 @@ const Header = () => {
           <h1 className="logo">펫브릿지</h1>
         </Link>
         <div className="nav-menu">
-          <Link to={"/Announcement"} class="link">
+          <Link to={"/Announcement"} className="link">
             <h2>
               <SearchOutlined />
               &nbsp;분양공고
             </h2>
           </Link>
-          <Link to={"/Shelter"} class="link">
+          <Link to={"/Shelter"} className="link">
             <h2>
               <HomeOutlined /> &nbsp;보호센터
             </h2>

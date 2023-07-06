@@ -9,7 +9,6 @@ const ShelterList = () => {
   const { filteredItems, selectedOption, newLocations } = useSelector(
     (state) => state.shelter
   );
-
   const focusMarkerHandler = (e) => {
     const focusCenter = newLocations.find(
       (location) => location[0] === e.target.innerHTML
@@ -28,7 +27,6 @@ const ShelterList = () => {
         <h2>동물보호센터</h2>
         <ShelterFilter />
       </div>
-
       <ul className="listWrap">
         {selectedOption ? (
           <>
@@ -41,48 +39,38 @@ const ShelterList = () => {
                   onClick={focusMarkerHandler}
                 >
                   {item.saveTrgtAnimal && (
-                    <div>구조대상동물 : {item.saveTrgtAnimal}</div>
+                    <div>구조대상동물: {item.saveTrgtAnimal}</div>
                   )}
-                  <div>주소 : {item.careAddr}</div>
+                  <div>주소: {item.careAddr}</div>
                   {item.careTel !== "***********" && (
-                    <div>전화번호 : {item.careTel}</div>
+                    <div>전화번호: {item.careTel}</div>
                   )}
                   <div>
-                    {item.weekOprEtime && item.weekOprEtime !== ":" ? (
+                    {item.weekOprEtime && item.weekOprEtime !== ":" && (
                       <span>
-                        평일 운영시간 : {item.weekOprStime}~{item.weekOprEtime}
+                        평일 운영시간: {item.weekOprStime}~{item.weekOprEtime}{" "}
                         &nbsp; &nbsp; &nbsp;
                       </span>
-                    ) : (
-                      <></>
                     )}
-                    {item.weekCellEtime && item.weekCellEtime !== ":" ? (
+                    {item.weekCellEtime && item.weekCellEtime !== ":" && (
                       <span>
-                        평일 분양시간 : {item.weekCellStime}~
-                        {item.weekCellEtime}
+                        평일 분양시간: {item.weekCellStime}~{item.weekCellEtime}
                       </span>
-                    ) : (
-                      <></>
                     )}
                   </div>
                   <div>
                     {item.weekendOprStime && item.weekendOprStime !== ":" ? (
                       <span>
-                        주말 운영시간 : {item.weekendOprStime}~
-                        {item.weekendOprEtime}
-                        &nbsp; &nbsp; &nbsp;
+                        주말 운영시간: {item.weekendOprStime}~
+                        {item.weekendOprEtime} &nbsp; &nbsp; &nbsp;
                       </span>
-                    ) : (
-                      <></>
-                    )}
+                    ) : null}
                     {item.weekendCellStime && item.weekendCellStime !== ":" ? (
                       <span>
-                        주말 분양시간 : {item.weekendCellStime}~
+                        주말 분양시간: {item.weekendCellStime}~
                         {item.weekendCellEtime}
                       </span>
-                    ) : (
-                      <></>
-                    )}
+                    ) : null}
                   </div>
                   <div>
                     {item.closeDay !== "" &&
@@ -90,52 +78,38 @@ const ShelterList = () => {
                     item.closeDay !== "1" &&
                     item.closeDay !== "2" &&
                     item.closeDay ? (
-                      <span>휴무일 : {item.closeDay}</span>
-                    ) : (
-                      <></>
-                    )}
+                      <span>휴무일: {item.closeDay}</span>
+                    ) : null}
                   </div>
                   <div>
                     {item.vetPersonCnt ? (
                       <span>
-                        수의사 인원수 : {item.vetPersonCnt}&nbsp; &nbsp; &nbsp;
+                        수의사 인원수: {item.vetPersonCnt} &nbsp; &nbsp; &nbsp;
                       </span>
-                    ) : (
-                      <></>
-                    )}
+                    ) : null}
                     {item.specsPersonCnt ? (
-                      <span>사양관리사 인원수 : {item.specsPersonCnt}</span>
-                    ) : (
-                      <></>
-                    )}
+                      <span>사양관리사 인원수: {item.specsPersonCnt}</span>
+                    ) : null}
                   </div>
                   <div>
                     {item.medicalCnt ? (
                       <span>
-                        진료실수 : {item.medicalCnt}&nbsp; &nbsp; &nbsp;
+                        진료실수: {item.medicalCnt} &nbsp; &nbsp; &nbsp;
                       </span>
-                    ) : (
-                      <></>
-                    )}
+                    ) : null}
                     {item.breedCnt ? (
                       <span>
-                        사육실수 : {item.breedCnt}&nbsp; &nbsp; &nbsp;
+                        사육실수: {item.breedCnt} &nbsp; &nbsp; &nbsp;
                       </span>
-                    ) : (
-                      <></>
-                    )}
+                    ) : null}
                     {item.quarabtineCnt ? (
                       <span>
-                        격리실수 : {item.quarabtineCnt}&nbsp; &nbsp; &nbsp;
+                        격리실수: {item.quarabtineCnt} &nbsp; &nbsp; &nbsp;
                       </span>
-                    ) : (
-                      <></>
-                    )}
+                    ) : null}
                     {item.transCarCnt ? (
-                      <span>구조운반용차량보유대수 : {item.transCarCnt}</span>
-                    ) : (
-                      <></>
-                    )}
+                      <span>구조운반용차량보유대수: {item.transCarCnt}</span>
+                    ) : null}
                   </div>
                 </Card>
               ))}

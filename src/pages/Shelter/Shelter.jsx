@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../components/Loader/Loader";
-import Map from "../components/Shelter/Map";
-import ShelterList from "../components/Shelter/ShelterList";
-import { getShelterData } from "../redux/api/shelterAPI";
+import Loader from "../../components/Loader/Loader";
+import Map from "../../components/Shelter/Map";
+import ShelterList from "../../components/Shelter/ShelterList";
+import { getShelterData } from "../../redux/api/shelterAPI";
+import "./style.scss";
 
 const Shelter = () => {
   const loading = useSelector((state) => state.shelter.loading);
