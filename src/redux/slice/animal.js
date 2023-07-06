@@ -19,7 +19,6 @@ const initialState = {
   pageCount: 1,
   perPage: 32,
   loading: false,
-  favorites: [],
   type: TypeOptions,
   region: RegionOptions,
   neuter: NeuterOptions,
@@ -52,14 +51,6 @@ const animalSlice = createSlice({
     setPage(state, action) {
       state.currentPage = action.payload;
     },
-    setFavorites(state, action) {
-      state.favorites = [...state.favorites, action.payload];
-    },
-    removeFavorites(state, action) {
-      state.favorites = state.favorites.filter(
-        (item) => item !== action.payload
-      );
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAnimalsData.pending, (state) => {
@@ -81,4 +72,5 @@ const animalSlice = createSlice({
 export const { setOpenModal, getItemDetails, getLocation, setPage } =
   animalSlice.actions;
 
-export default animalSlice;
+export const animalActions = animalSlice.actions
+export default animalSlice.reducer;

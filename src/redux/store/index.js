@@ -1,9 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./reducers";
+import animalSlice from "../slice/animal";
+import shelterSlice from "../slice/shelter";
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    shelter: shelterSlice,
+    animal: animalSlice,
+  },
 });
-console.log(store.getState());
 
 export default store;

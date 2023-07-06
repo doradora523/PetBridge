@@ -6,7 +6,7 @@ import {
   MarkerF,
 } from "@react-google-maps/api";
 import { useDispatch, useSelector } from "react-redux";
-import shelterSlice from "../../redux/slice/shelter";
+import { shelterActions } from "../../redux/slice/shelter";
 import Geocode from "react-geocode";
 
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
@@ -72,11 +72,11 @@ const Map = () => {
           ])
           .concat(geoLocations.filter((item) => item !== null));
 
-        dispatch(shelterSlice.actions.setNewLocations(newLocationsData));
+        dispatch(shelterActions.setNewLocations(newLocationsData));
 
         // 첫 번째 데이터의 좌표를 중심으로 Center 설정
         dispatch(
-          shelterSlice.actions.setCenter({
+          shelterActions.setCenter({
             lat: newLocationsData[0][1],
             lng: newLocationsData[0][2],
           })

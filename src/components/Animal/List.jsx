@@ -3,7 +3,7 @@ import { Card, Divider, Space, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useDispatch, useSelector } from "react-redux";
 import { HiHeart } from "react-icons/hi";
-import animalSlice from "../../redux/slice/animal";
+import { animalActions } from "../../redux/slice/animal";
 import Geocode from "react-geocode";
 import Pagination from "./Pagination";
 import Loader from "../Loader/Loader.jsx";
@@ -21,7 +21,7 @@ const List = () => {
     try {
       Geocode.fromAddress(careAddr).then((response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        dispatch(animalSlice.actions.getLocation({ lat, lng }));
+        dispatch(animalActions.getLocation({ lat, lng }));
       });
     } catch (error) {
       console.error(error);
@@ -29,17 +29,17 @@ const List = () => {
   };
 
   const getItemDetailsHandler = (d) => {
-    dispatch(animalSlice.actions.getItemDetails(d));
+    dispatch(animalActions.getItemDetails(d));
   };
 
   const showDrawer = () => {
-    dispatch(animalSlice.actions.setOpenModal(true));
+    dispatch(animalActions.setOpenModal(true));
   };
 
   const handleFavorite = (item) => {
     favorites.includes(item)
-      ? dispatch(animalSlice.actions.removeFavorites(item))
-      : dispatch(animalSlice.actions.setFavorites(item));
+      ? dispatch(animalActions.removeFavorites(item))
+      : dispatch(animalActions.setFavorites(item));
   };
 
   return loading ? (

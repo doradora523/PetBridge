@@ -1,7 +1,7 @@
 import { Drawer } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import animalSlice from "../../../redux/slice/animal";
+import { animalActions } from "../../../redux/slice/animal";
 import Map from "./Map";
 import AnimalInfo from "./AnimalInfo";
 import ShelterInfo from "./ShelterInfo";
@@ -11,7 +11,7 @@ const Modal = () => {
   const openModal = useSelector((state) => state.animal.openModal);
 
   const onClose = () => {
-    dispatch(animalSlice.actions.setOpenModal(false));
+    dispatch(animalActions.setOpenModal(false));
   };
 
   return (

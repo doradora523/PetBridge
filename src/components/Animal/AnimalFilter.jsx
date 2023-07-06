@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UseFilterForm from "../public/UseFilterForm";
-import animalSlice from "../../redux/slice/animal";
+import { animalActions } from "../../redux/slice/animal";
 const AnimalFilter = () => {
   const dispatch = useDispatch();
   const {
@@ -17,19 +17,19 @@ const AnimalFilter = () => {
   const handleSelectChange = useCallback(
     (code, value, type) => {
       if (type === "region") {
-        dispatch(animalSlice.actions.setSelectedRegion(value));
+        dispatch(animalActions.setSelectedRegion(value));
       }
       if (type === "type") {
-        dispatch(animalSlice.actions.setSelectedType(value));
+        dispatch(animalActions.setSelectedType(value));
       }
       if (type === "neuter") {
-        dispatch(animalSlice.actions.setSelectedNeuter(value));
+        dispatch(animalActions.setSelectedNeuter(value));
       }
     },
     [dispatch, items]
   );
   return (
-    <div>
+    <div className="filters">
       <UseFilterForm
         placeholder="지역"
         options={region}

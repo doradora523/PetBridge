@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import animalSlice from "../../redux/slice/animal";
+import { animalActions } from "../../redux/slice/animal";
 import ReactPaginate from "react-paginate";
 
 const Pagination = () => {
@@ -8,7 +8,7 @@ const Pagination = () => {
   const { currentPage, pageCount } = useSelector((state) => state.animal);
 
   const handlePageClick = (selectedPage) => {
-    dispatch(animalSlice.actions.setPage(selectedPage.selected + 1));
+    dispatch(animalActions.setPage(selectedPage.selected + 1));
 
     window.scrollTo(0, 0);
   };

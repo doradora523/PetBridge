@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import shelterSlice from "../../redux/slice/shelter";
+import { shelterActions } from "../../redux/slice/shelter";
 import UseFilterForm from "../public/UseFilterForm";
 
 const ShelterFilter = () => {
@@ -11,12 +11,12 @@ const ShelterFilter = () => {
 
   const handleSelectChange = useCallback(
     (value) => {
-      dispatch(shelterSlice.actions.setSelectedOption(value));
+      dispatch(shelterActions.setSelectedOption(value));
       if (value) {
         const filteredItems = items.filter(
           (item) => item.orgNm.split(" ")[0] === value
         );
-        dispatch(shelterSlice.actions.setFilteredItems(filteredItems));
+        dispatch(shelterActions.setFilteredItems(filteredItems));
       }
     },
     [dispatch, items]

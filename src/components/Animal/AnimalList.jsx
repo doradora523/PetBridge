@@ -3,7 +3,7 @@ import { Card, Divider, Space, Tag } from "antd";
 import Meta from "antd/es/card/Meta";
 import { useDispatch, useSelector } from "react-redux";
 import { HiHeart } from "react-icons/hi";
-import animalSlice from "../../redux/slice/animal";
+import { animalActions } from "../../redux/slice/animal";
 import Geocode from "react-geocode";
 import Pagination from "./Pagination";
 import Loader from "../Loader/Loader.jsx";
@@ -11,7 +11,7 @@ import AnimalFilter from "./AnimalFilter";
 
 const List = () => {
   const dispatch = useDispatch();
-  const { items, loading, favorites } = useSelector((state) => state.animal);
+  const { items, loading } = useSelector((state) => state.animal);
 
   const getLocationHandler = (careAddr) => {
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
@@ -22,7 +22,7 @@ const List = () => {
     try {
       Geocode.fromAddress(careAddr).then((response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        dispatch(animalSlice.actions.getLocation({ lat, lng }));
+        dispatch(animalActions.getLocation({ lat, lng }));
       });
     } catch (error) {
       console.error(error);
@@ -30,17 +30,11 @@ const List = () => {
   };
 
   const getItemDetailsHandler = (d) => {
-    dispatch(animalSlice.actions.getItemDetails(d));
+    dispatch(animalActions.getItemDetails(d));
   };
 
   const showDrawer = () => {
-    dispatch(animalSlice.actions.setOpenModal(true));
-  };
-
-  const handleFavorite = (item) => {
-    favorites.includes(item)
-      ? dispatch(animalSlice.actions.removeFavorites(item))
-      : dispatch(animalSlice.actions.setFavorites(item));
+    dispatch(animalActions.setOpenModal(true));
   };
   
   return loading ? (
@@ -76,10 +70,6 @@ const List = () => {
                 />
               }
             >
-              <HiHeart
-                className="faviorite"
-                onClick={() => handleFavorite(d.desertionNo)}
-              />
               <Meta
                 title={d.kindCd}
                 description={`구조 : (${d.happenDt.slice(

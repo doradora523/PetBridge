@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import shelterSlice from "../../redux/slice/shelter";
+import { shelterActions } from "../../redux/slice/shelter";
 import ShelterFilter from "./ShelterFilter";
 
 const ShelterList = () => {
@@ -15,7 +15,7 @@ const ShelterList = () => {
       (location) => location[0] === e.target.innerHTML
     );
     dispatch(
-      shelterSlice.actions.setCenter({
+      shelterActions.setCenter({
         lat: focusCenter[1],
         lng: focusCenter[2],
       })
@@ -141,7 +141,9 @@ const ShelterList = () => {
               ))}
           </>
         ) : (
-          <div>가까운 지역의 센터를 검색해주세요.</div>
+          <div className="searchInfoText">
+            가까운 지역의 센터를 검색해주세요.
+          </div>
         )}
       </ul>
     </div>

@@ -1,0 +1,42 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deck {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+
+.deck > div {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.2rem;
+  background-color: #e1ccec;
+  color: #fff;
+  width: 100vw;
+  max-width: 500px;
+  height: 100vh;
+  max-height: 300px;
+  will-change: transform;
+  border-radius: 10px;
+  box-shadow: 0 12.5px 50px -10px rgba(105, 76, 120, 0.4),
+    0 10px 10px -10px rgba(148, 83, 183, 0.3);
+}
+.deck:last-child > div {
+  font-size: 2.5rem;
+  background-color: #c9b6e4e8;
+}
