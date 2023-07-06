@@ -1,7 +1,6 @@
 import React from "react";
 import { Divider, Tag } from "antd";
 import { BsFillTelephoneOutboundFill } from "react-icons/bs";
-import Map from "../../Shelter/Map";
 import { useSelector } from "react-redux";
 
 const ShelterInfo = () => {
