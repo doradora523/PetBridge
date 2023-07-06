@@ -22,7 +22,8 @@
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "react-use-gesture": "^9.1.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "homepage": "http://petbridge.com"
   },
   "scripts": {
     "start": "react-scripts start",
