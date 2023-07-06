@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../components/Loader/Loader";
 import Map from "../../components/Shelter/Map";
+import Loader from "../../components/Loader/Loader";
 import ShelterList from "../../components/Shelter/ShelterList";
 import { getShelterData } from "../../redux/api/shelterAPI";
 import "./style.scss";
